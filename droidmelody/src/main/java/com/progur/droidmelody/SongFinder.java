@@ -53,6 +53,7 @@ public class SongFinder {
         int artistColumn = cur.getColumnIndex(MediaStore.Audio.Media.ARTIST);
         int titleColumn = cur.getColumnIndex(MediaStore.Audio.Media.TITLE);
         int albumColumn = cur.getColumnIndex(MediaStore.Audio.Media.ALBUM);
+        int albumArtColumn = cur.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID);
         int durationColumn = cur.getColumnIndex(MediaStore.Audio.Media.DURATION);
         int idColumn = cur.getColumnIndex(MediaStore.Audio.Media._ID);
 
@@ -62,7 +63,8 @@ public class SongFinder {
                     cur.getString(artistColumn),
                     cur.getString(titleColumn),
                     cur.getString(albumColumn),
-                    cur.getLong(durationColumn)));
+                    cur.getLong(durationColumn),
+                    cur.getLong(albumArtColumn)));
         } while (cur.moveToNext());
 
     }
@@ -85,14 +87,16 @@ public class SongFinder {
         String artist;
         String title;
         String album;
+        long albumId;
         long duration;
 
-        public Song(long id, String artist, String title, String album, long duration) {
+        public Song(long id, String artist, String title, String album, long duration, long albumId) {
             this.id = id;
             this.artist = artist;
             this.title = title;
             this.album = album;
             this.duration = duration;
+            this.albumId = albumId;
         }
 
         public long getId() {
@@ -115,9 +119,23 @@ public class SongFinder {
             return duration;
         }
 
+        public long getAlbumId() {
+            return albumId;
+        }
+
         public Uri getURI() {
             return ContentUris.withAppendedId(
                     android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id);
+        }
+
+        public Uri getAlbumArt() {
+            try {
+                Uri genericArtUri = Uri.parse("content://media/external/audio/albumart");
+                Uri actualArtUri = ContentUris.withAppendedId(genericArtUri, albumId);
+                return actualArtUri;
+            } catch(Exception e) {
+                return null;
+            }
         }
     }
 }
