@@ -18,10 +18,10 @@ for(SongFinder.Song song:songs) {
 }
 ```
 
-On devices running Android Marshmallow or higher, you'll need to request the `READ_EXTERNAL_STORAGE` permission at runtime, in to access music files on the SD Card. You can either request it using the usual code, or you can use the `MelodyHelper` helper class:
+On devices running Android Marshmallow or higher, you'll need to request the `READ_EXTERNAL_STORAGE` permission at runtime in to access music files on the SD Card. You can either request it using the usual code, or you can use the `MelodyHelper` helper class:
 
 ```
-// Check if permission available or request
+// Check if permission granted. If not, request
 if(MelodyHelper.hasExternalStorageAccess(this)) {
     // Do something
 }
