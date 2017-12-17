@@ -4,6 +4,12 @@ This is an easy-to-use library that simplifies access to music files on Android.
 
 ## Usage
 
+Add to your Android Studio project the following dependency:
+
+```
+implementation 'com.progur.droidmelody:droidmelody:1.0.2'
+```
+
 If you want to get a list of all songs available on an Android device, all you need is the following code:
 
 ```
